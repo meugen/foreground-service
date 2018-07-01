@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startView.setOnClickListener(this);
         stopView.setOnClickListener(this);
         recyclerView.addItemDecoration(new DividerItemDecoration(
-                this, DividerItemDecoration.HORIZONTAL));
+                this, DividerItemDecoration.VERTICAL));
 
         getSupportLoaderManager().initLoader(0, null, new MainCallbacks());
     }
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemSelected(final int result) {
-
+        DetailsActivity.start(this, result);
     }
 
     private class MainCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
