@@ -32,6 +32,9 @@
             android:enabled="true"
             android:exported="true"
             android:process=":foreground"/>
+
+        <activity android:name=".DetailsActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbOpenHelper extends SQLiteOpenHelper {
 
     private static final String NAME = "foreground.db";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     public DbOpenHelper(final Context context) {
         super(context, NAME, null, VERSION);
@@ -20,6 +20,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
                 " timestamp BIGINTEGER NOT NULL," +
                 " result INTEGER NOT NULL," +
                 " message VARCHAR(200) NOT NULL);");
+        db.execSQL("CREATE INDEX requests_result ON requests (result);");
     }
 
     @Override

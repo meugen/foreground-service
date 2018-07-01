@@ -3,7 +3,6 @@ package meugeninua.foregroundservice;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +35,6 @@ public class ForegroundService extends Service {
     private PowerManager.WakeLock wakeLock;
     private ScheduledExecutorService executor;
     private OkHttpClient client;
-    private ContentResolver resolver;
     private Uri contentUri;
 
     @Override
@@ -62,7 +60,6 @@ public class ForegroundService extends Service {
 
         client = new OkHttpClient.Builder()
                 .build();
-        resolver = getContentResolver();
         contentUri = new Uri.Builder()
                 .scheme("content")
                 .authority(ForegroundProvider.AUTHORITY)
