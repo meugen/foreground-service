@@ -9,6 +9,7 @@ import android.view.View;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.Binding;
 
@@ -17,9 +18,9 @@ public abstract class BaseFragment<B extends Binding> extends Fragment {
     @Inject protected B binding;
 
     @Override
-    public void onAttach(final Context context) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         AndroidSupportInjection.inject(this);
-        super.onAttach(context);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
