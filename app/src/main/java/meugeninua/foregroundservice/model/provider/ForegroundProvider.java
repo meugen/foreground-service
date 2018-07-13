@@ -1,4 +1,4 @@
-package meugeninua.foregroundservice;
+package meugeninua.foregroundservice.model.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -9,9 +9,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-public class ForegroundProvider extends ContentProvider {
+import meugeninua.foregroundservice.model.db.DbOpenHelper;
 
-    static final String AUTHORITY = "meugeninua.foregroundservice.provider";
+public class ForegroundProvider extends ContentProvider implements ProviderConstants {
+
     private static final int STATS_MATCH = 1;
     private static final int REQUESTS_MATCH = 2;
 

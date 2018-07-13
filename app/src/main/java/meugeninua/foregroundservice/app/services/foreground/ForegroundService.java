@@ -1,4 +1,4 @@
-package meugeninua.foregroundservice;
+package meugeninua.foregroundservice.app.services.foreground;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
@@ -19,23 +18,36 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import meugeninua.foregroundservice.R;
+import meugeninua.foregroundservice.model.provider.ProviderConstants;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ForegroundService extends Service {
+public class ForegroundService extends Service implements ProviderConstants {
 
     private static final String TAG = ForegroundService.class.getSimpleName();
 
     private static final int NOTIFICATION_ID = 1000;
     private static final String STOP_ACTION = "meugeninua.foreground.action.STOP";
 
+    private static Intent build(final Context context) {
+        return new Intent(context, ForegroundService.class);
+    }
+
+    public static void start(final Context context) {
+        context.startService(build(context));
+    }
+
+    public static void stop(final Context context) {
+        context.stopService(build(context));
+    }
+
     private StopReceiver receiver;
     private PowerManager.WakeLock wakeLock;
     private ScheduledExecutorService executor;
     private OkHttpClient client;
-    private Uri contentUri;
 
     @Override
     public void onCreate() {
@@ -59,11 +71,6 @@ public class ForegroundService extends Service {
         this.wakeLock.acquire();
 
         client = new OkHttpClient.Builder()
-                .build();
-        contentUri = new Uri.Builder()
-                .scheme("content")
-                .authority(ForegroundProvider.AUTHORITY)
-                .appendPath("requests")
                 .build();
 
         executor = Executors.newScheduledThreadPool(2);
@@ -112,7 +119,7 @@ public class ForegroundService extends Service {
         values.put("timestamp", System.currentTimeMillis());
         values.put("result", result);
         values.put("message", message);
-        getContentResolver().insert(contentUri, values);
+        getContentResolver().insert(REQUESTS_URI, values);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package meugeninua.foregroundservice;
+package meugeninua.foregroundservice.model.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

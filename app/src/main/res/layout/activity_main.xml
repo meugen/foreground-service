@@ -1,54 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_main"
-        android:id="@+id/recycler"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginTop="@dimen/default_margin">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:id="@+id/start"
-            android:drawableLeft="@drawable/baseline_play_arrow_black_24"
-            android:drawableStart="@drawable/baseline_play_arrow_black_24"
-            android:drawablePadding="@dimen/default_padding"
-            android:text="@string/button_start"
-            android:layout_weight="1"/>
-
-        <Space
-            android:layout_width="@dimen/default_margin"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:id="@+id/stop"
-            android:drawableLeft="@drawable/baseline_stop_black_24"
-            android:drawableStart="@drawable/baseline_stop_black_24"
-            android:drawablePadding="@dimen/default_padding"
-            android:text="@string/button_stop"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+    tools:context=".ui.activities.main.MainActivity"
+    android:name="meugeninua.foregroundservice.ui.activities.main.fragments.main.MainFragment"
+    android:id="@+id/main"/>

@@ -1,4 +1,4 @@
-package meugeninua.foregroundservice;
+package meugeninua.foregroundservice.ui.activities.main.fragments.main.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,24 +10,31 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import meugeninua.foregroundservice.R;
+import meugeninua.foregroundservice.app.di.qualifiers.AppContext;
+import meugeninua.foregroundservice.app.di.scopes.PerFragment;
+
+@PerFragment
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> {
 
     private final LayoutInflater inflater;
-    private final OnItemSelectedListener listener;
+    private OnItemSelectedListener listener;
     private Cursor cursor;
 
-    public MainAdapter(
-            final Context context,
-            final OnItemSelectedListener listener,
-            final Cursor cursor) {
+    @Inject
+    MainAdapter(@AppContext final Context context) {
         this.inflater = LayoutInflater.from(context);
-        this.listener = listener;
-        this.cursor = cursor;
     }
 
     public void swapCursor(final Cursor cursor) {
         this.cursor = cursor;
         notifyDataSetChanged();
+    }
+
+    public void setListener(final OnItemSelectedListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -45,7 +52,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> {
 
     @Override
     public int getItemCount() {
-        return cursor.getCount();
+        return cursor == null ? 0 : cursor.getCount();
     }
 
     static class  MainHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -73,13 +80,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> {
             } else {
                 resultView.setImageResource(R.drawable.baseline_error_black_24);
             }
-            countView.setText(Integer.toString(cursor.getInt(cursor.getColumnIndexOrThrow("c"))));
+            final int count = cursor.getInt(cursor.getColumnIndexOrThrow("c"));
+            countView.setText(Integer.toString(count));
         }
 
         @Override
         public void onClick(final View v) {
             final int viewId = v.getId();
-            if (viewId == R.id.container) {
+            if (viewId == R.id.container && listener != null) {
                 listener.onItemSelected(result);
             }
         }
