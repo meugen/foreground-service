@@ -17,14 +17,14 @@ import javax.inject.Inject;
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
-import meugeninua.foregroundservice.model.provider.ProviderConstants;
+import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.BaseFragment;
 import meugeninua.foregroundservice.ui.activities.details.DetailsActivity;
 import meugeninua.foregroundservice.ui.activities.main.fragments.main.binding.MainBinding;
 import meugeninua.foregroundservice.ui.activities.main.fragments.main.view.ArchMainView;
 
 public class MainFragment extends BaseFragment<MainBinding>
-        implements ArchMainView, ProviderConstants {
+        implements ArchMainView, ForegroundProviderConstants {
 
     @Inject @ActivityContext Context context;
 

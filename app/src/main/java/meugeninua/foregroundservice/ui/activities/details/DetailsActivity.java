@@ -2,24 +2,15 @@ package meugeninua.foregroundservice.ui.activities.details;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.RecyclerView;
 
 import meugeninua.foregroundservice.R;
-import meugeninua.foregroundservice.model.provider.ProviderConstants;
+import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
 import meugeninua.foregroundservice.ui.activities.base.BaseActivity;
 import meugeninua.foregroundservice.ui.activities.details.fragments.details.DetailsFragment;
-import meugeninua.foregroundservice.ui.activities.details.fragments.details.adapters.DetailsAdapter;
 
-public class DetailsActivity extends BaseActivity implements ProviderConstants {
+public class DetailsActivity extends BaseActivity implements ForegroundProviderConstants {
 
     private static final String EXTRA_RESULT = "result";
     private static final String FRAGMENT_TAG = "details";

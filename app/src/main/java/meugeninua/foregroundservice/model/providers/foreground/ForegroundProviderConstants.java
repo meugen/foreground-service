@@ -1,14 +1,14 @@
-package meugeninua.foregroundservice.model.provider;
+package meugeninua.foregroundservice.model.providers.foreground;
 
 import android.net.Uri;
 
-public interface ProviderConstants {
+public interface ForegroundProviderConstants {
 
-    String AUTHORITY = "meugeninua.foregroundservice.provider";
+    String AUTHORITY = "meugeninua.foregroundservice.provider.foreground";
 
     Uri BASE_URI = new Uri.Builder()
             .scheme("content")
-            .authority(ForegroundProvider.AUTHORITY)
+            .authority(AUTHORITY)
             .build();
 
     Uri STATS_URI = BASE_URI.buildUpon()

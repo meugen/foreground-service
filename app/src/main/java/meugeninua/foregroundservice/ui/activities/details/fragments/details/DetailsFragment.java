@@ -16,12 +16,11 @@ import javax.inject.Inject;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
-import meugeninua.foregroundservice.model.provider.ProviderConstants;
+import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.BaseFragment;
-import meugeninua.foregroundservice.ui.activities.details.DetailsActivity;
 import meugeninua.foregroundservice.ui.activities.details.fragments.details.binding.DetailsBinding;
 
-public class DetailsFragment extends BaseFragment<DetailsBinding> implements ProviderConstants {
+public class DetailsFragment extends BaseFragment<DetailsBinding> implements ForegroundProviderConstants {
 
     private static final String PARAM_RESULT = "result";
 

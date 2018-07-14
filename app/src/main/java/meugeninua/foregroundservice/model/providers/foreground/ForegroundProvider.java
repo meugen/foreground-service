@@ -1,39 +1,34 @@
-package meugeninua.foregroundservice.model.provider;
+package meugeninua.foregroundservice.model.providers.foreground;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import meugeninua.foregroundservice.model.db.DbOpenHelper;
+import javax.inject.Inject;
 
-public class ForegroundProvider extends ContentProvider implements ProviderConstants {
+import dagger.android.AndroidInjection;
+
+public class ForegroundProvider extends ContentProvider implements ForegroundProviderConstants {
 
     private static final int STATS_MATCH = 1;
     private static final int REQUESTS_MATCH = 2;
 
-    private SQLiteDatabase database;
+    @Inject SQLiteDatabase database;
+    @Inject ContentResolver resolver;
+
     private UriMatcher matcher;
-    private ContentResolver resolver;
-    private Uri baseUri;
 
     @Override
     public boolean onCreate() {
+        AndroidInjection.inject(this);
+
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(AUTHORITY, "/stats", STATS_MATCH);
         matcher.addURI(AUTHORITY, "/requests", REQUESTS_MATCH);
-
-        final Context context = getContext();
-        resolver = context.getContentResolver();
-        database = new DbOpenHelper(context).getWritableDatabase();
-        baseUri = new Uri.Builder()
-                .scheme("content")
-                .authority(AUTHORITY)
-                .build();
         return true;
     }
 
@@ -59,10 +54,9 @@ public class ForegroundProvider extends ContentProvider implements ProviderConst
         final int code = matcher.match(uri);
         if (code == REQUESTS_MATCH) {
             final long id = database.insertOrThrow("requests", null, values);
-            resolver.notifyChange(baseUri.buildUpon().appendPath("stats").build(), null);
-            resolver.notifyChange(baseUri.buildUpon().appendPath("requests").build(), null);
-            return baseUri.buildUpon()
-                    .appendPath("requests")
+            resolver.notifyChange(STATS_URI, null);
+            resolver.notifyChange(REQUESTS_URI, null);
+            return REQUESTS_URI.buildUpon()
                     .appendPath(Long.toString(id))
                     .build();
         } else {

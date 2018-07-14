@@ -6,10 +6,11 @@ import dagger.android.support.AndroidSupportInjectionModule;
 import meugeninua.foregroundservice.app.ForegroundApp;
 import meugeninua.foregroundservice.app.di.modules.AppModule;
 import meugeninua.foregroundservice.app.di.modules.ComponentsModule;
+import meugeninua.foregroundservice.app.di.modules.NetworkModule;
 import meugeninua.foregroundservice.app.di.scopes.PerApplication;
 
 @Component(modules = {AndroidSupportInjectionModule.class,
-        AppModule.class, ComponentsModule.class})
+        AppModule.class, ComponentsModule.class, NetworkModule.class})
 @PerApplication
 public interface AppComponent extends AndroidInjector<ForegroundApp> {
 

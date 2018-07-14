@@ -23,18 +23,22 @@
         </activity>
 
         <provider
-            android:name=".model.provider.ForegroundProvider"
-            android:authorities="meugeninua.foregroundservice.provider"
+            android:name=".model.providers.foreground.ForegroundProvider"
+            android:authorities="meugeninua.foregroundservice.provider.foreground"
             android:enabled="true"
-            android:exported="true">
-        </provider>
+            android:exported="false"/>
+
+        <provider
+            android:authorities="meugeninua.foregroundservice.provider.prefs"
+            android:name=".model.providers.prefs.PrefsProvider"
+            android:enabled="true"
+            android:exported="false"/>
 
         <service
             android:name=".app.services.foreground.ForegroundService"
             android:enabled="true"
             android:exported="true"
-            />
-        <!--android:process=":foreground"-->
+            android:process=":foreground"/>
 
         <activity android:name=".ui.activities.details.DetailsActivity"
             android:parentActivityName=".ui.activities.main.MainActivity">
