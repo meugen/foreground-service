@@ -1,5 +1,6 @@
 package meugeninua.foregroundservice.app.services.foreground;
 
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -7,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
@@ -19,6 +21,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import meugeninua.foregroundservice.R;
+import meugeninua.foregroundservice.app.ForegroundApp;
 import meugeninua.foregroundservice.model.provider.ProviderConstants;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -60,7 +63,7 @@ public class ForegroundService extends Service implements ProviderConstants {
                 this, 0, new Intent(STOP_ACTION),
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "")
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ForegroundApp.CHANNEL_ID)
                 .setContentTitle(getText(R.string.app_name))
                 .setSmallIcon(R.drawable.baseline_import_export_horizontal_black_18)
                 .addAction(R.drawable.baseline_stop_black_18, getText(R.string.button_stop), stopIntent);

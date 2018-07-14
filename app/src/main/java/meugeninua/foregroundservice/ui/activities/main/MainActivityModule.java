@@ -19,9 +19,6 @@ public interface MainActivityModule {
     @Binds @PerActivity
     AppCompatActivity bindActivity(MainActivity activity);
 
-    @Binds @PerActivity
-    Binding bindBinding(BindingImpl impl);
-
     @ContributesAndroidInjector(modules = MainFragmentModule.class)
     @PerFragment
     MainFragment contributeMainFragment();

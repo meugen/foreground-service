@@ -1,4 +1,4 @@
-package meugeninua.foregroundservice.ui.activities.main.fragments.main;
+package meugeninua.foregroundservice.ui.activities.details.fragments.details;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -16,15 +16,23 @@ import javax.inject.Inject;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
-import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
 import meugeninua.foregroundservice.model.provider.ProviderConstants;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.BaseFragment;
 import meugeninua.foregroundservice.ui.activities.details.DetailsActivity;
-import meugeninua.foregroundservice.ui.activities.main.fragments.main.binding.MainBinding;
-import meugeninua.foregroundservice.ui.activities.main.fragments.main.view.ArchMainView;
+import meugeninua.foregroundservice.ui.activities.details.fragments.details.binding.DetailsBinding;
 
-public class MainFragment extends BaseFragment<MainBinding>
-        implements ArchMainView, ProviderConstants {
+public class DetailsFragment extends BaseFragment<DetailsBinding> implements ProviderConstants {
+
+    private static final String PARAM_RESULT = "result";
+
+    public static DetailsFragment build(final int result) {
+        final Bundle args = new Bundle();
+        args.putInt(PARAM_RESULT, result);
+
+        final DetailsFragment fragment = new DetailsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Inject @ActivityContext Context context;
 
@@ -34,7 +42,7 @@ public class MainFragment extends BaseFragment<MainBinding>
             @NonNull final LayoutInflater inflater,
             @Nullable final ViewGroup container,
             @Nullable final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main,
+        return inflater.inflate(R.layout.fragment_details,
                 container, false);
     }
 
@@ -42,34 +50,19 @@ public class MainFragment extends BaseFragment<MainBinding>
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding.setupRecycler();
-        binding.setupListeners(this);
 
-        getLoaderManager().initLoader(0, null, new MainCallbacks());
+        getLoaderManager().initLoader(0, getArguments(), new DetailsCallbacks());
     }
 
-    @Override
-    public void onStartClick() {
-        ForegroundService.start(context);
-    }
-
-    @Override
-    public void onStopClick() {
-        ForegroundService.stop(context);
-    }
-
-    @Override
-    public void onItemSelected(final int result) {
-        DetailsActivity.start(context, result);
-    }
-
-    private class MainCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
+    private class DetailsCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
 
         @NonNull
         @Override
         public Loader<Cursor> onCreateLoader(final int id, @Nullable final Bundle args) {
+            final int result = args == null ? 0 : args.getInt(PARAM_RESULT, 0);
             return new CursorLoader(context,
-                    STATS_URI, null, null,
-                    null, null);
+                    REQUESTS_URI, null, "result=?",
+                    new String[] { Integer.toString(result) }, null);
         }
 
         @Override
@@ -78,6 +71,8 @@ public class MainFragment extends BaseFragment<MainBinding>
         }
 
         @Override
-        public void onLoaderReset(@NonNull final Loader<Cursor> loader) {}
+        public void onLoaderReset(@NonNull final Loader<Cursor> loader) {
+
+        }
     }
 }

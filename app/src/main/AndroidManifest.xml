@@ -33,15 +33,16 @@
             android:name=".app.services.foreground.ForegroundService"
             android:enabled="true"
             android:exported="true"
-            android:process=":foreground"/>
+            />
+        <!--android:process=":foreground"-->
 
-        <!--<activity android:name=".ui.activities.details.DetailsActivity"
+        <activity android:name=".ui.activities.details.DetailsActivity"
             android:parentActivityName=".ui.activities.main.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.main.MainActivity"/>
-        </activity>-->
+        </activity>
     </application>
 
 </manifest>

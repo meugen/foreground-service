@@ -3,6 +3,8 @@ package meugeninua.foregroundservice.app.di.modules;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import meugeninua.foregroundservice.app.di.scopes.PerActivity;
+import meugeninua.foregroundservice.ui.activities.details.DetailsActivity;
+import meugeninua.foregroundservice.ui.activities.details.DetailsActivityModule;
 import meugeninua.foregroundservice.ui.activities.main.MainActivity;
 import meugeninua.foregroundservice.ui.activities.main.MainActivityModule;
 
@@ -13,7 +15,7 @@ public interface ComponentsModule {
     @PerActivity
     MainActivity contributeMainActivity();
 
-//    @ContributesAndroidInjector(modules = DetailsActivityModule.class)
-//    @PerActivity
-//    DetailsActivity contributeDetailsActivity();
+    @ContributesAndroidInjector(modules = DetailsActivityModule.class)
+    @PerActivity
+    DetailsActivity contributeDetailsActivity();
 }

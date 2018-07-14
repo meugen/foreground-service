@@ -2,11 +2,12 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?attr/listPreferredItemHeight"
+    android:layout_height="?android:attr/listPreferredItemHeight"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:id="@+id/container"
-    android:background="?attr/selectableItemBackground">
+    android:background="?android:attr/selectableItemBackground">
+    <!-- -->
 
     <ImageView
         android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textAppearance="?android:attr/textAppearanceListItem"
         android:id="@+id/count"
         tools:text="0"
         android:gravity="end"

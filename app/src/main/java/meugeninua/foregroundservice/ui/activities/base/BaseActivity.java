@@ -11,30 +11,16 @@ import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.Binding;
 
-public abstract class BaseActivity<B extends Binding> extends AppCompatActivity
+public abstract class BaseActivity extends AppCompatActivity
         implements HasSupportFragmentInjector {
 
     @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
-    @Inject protected B binding;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onContentChanged() {
-        super.onContentChanged();
-        binding.attachView(getWindow().getDecorView());
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        binding.detachView();
     }
 
     @Override
