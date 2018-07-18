@@ -14,6 +14,7 @@ import android.util.Log;
 
 import java.io.Reader;
 import java.lang.ref.WeakReference;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -21,8 +22,8 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import meugeninua.foregroundservice.R;
-import meugeninua.foregroundservice.app.ForegroundApp;
 import meugeninua.foregroundservice.app.managers.AppPrefsManager;
+import meugeninua.foregroundservice.app.managers.AppServiceManager;
 import meugeninua.foregroundservice.model.enums.ServiceStatus;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
 import okhttp3.Call;
@@ -51,10 +52,11 @@ public class ForegroundService extends Service implements ForegroundProviderCons
 
     private StopReceiver receiver;
     private PowerManager.WakeLock wakeLock;
+    private ScheduledExecutorService executor;
 
-    @Inject ScheduledExecutorService executor;
     @Inject OkHttpClient client;
     @Inject AppPrefsManager prefsManager;
+    @Inject AppServiceManager serviceManager;
 
     @Override
     public void onCreate() {
@@ -68,17 +70,17 @@ public class ForegroundService extends Service implements ForegroundProviderCons
                 this, 0, new Intent(STOP_ACTION),
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ForegroundApp.CHANNEL_ID)
-                .setContentTitle(getText(R.string.app_name))
-                .setSmallIcon(R.drawable.baseline_import_export_horizontal_black_18)
+        final NotificationCompat.Builder builder = serviceManager.newBuilderForNotification()
                 .addAction(R.drawable.baseline_stop_black_18, getText(R.string.button_stop), stopIntent);
         startForeground(NOTIFICATION_ID, builder.build());
 
         final PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         this.wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "foreground");
         this.wakeLock.acquire();
+        this.executor = Executors.newScheduledThreadPool(2);
 
-        prefsManager.setServiceStatus(ServiceStatus.SERVICE_FOREGROUND);
+        executor.execute(() -> prefsManager
+                .setServiceStatus(ServiceStatus.SERVICE_FOREGROUND));
         executor.scheduleWithFixedDelay(new RunnableImpl(this),
                 0, 10, TimeUnit.SECONDS);
     }
@@ -88,8 +90,9 @@ public class ForegroundService extends Service implements ForegroundProviderCons
         super.onDestroy();
         unregisterReceiver(receiver);
         this.wakeLock.release();
+        executor.execute(() -> prefsManager
+                .setServiceStatus(ServiceStatus.SERVICE_STOPPED));
         executor.shutdown();
-        prefsManager.setServiceStatus(ServiceStatus.SERVICE_STOPPED);
     }
 
     private void onCall() {

@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
 import meugeninua.foregroundservice.app.managers.AppEventsManager;
+import meugeninua.foregroundservice.app.managers.AppPrefsManager;
 import meugeninua.foregroundservice.app.managers.events.ServiceStatusChangedEvent;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
@@ -30,6 +31,7 @@ public class MainFragment extends BaseFragment<MainBinding>
 
     @Inject @ActivityContext Context context;
     @Inject AppEventsManager eventsManager;
+    @Inject AppPrefsManager prefsManager;
 
     @Nullable
     @Override
@@ -46,11 +48,11 @@ public class MainFragment extends BaseFragment<MainBinding>
         super.onActivityCreated(savedInstanceState);
         binding.setupRecycler();
         binding.setupListeners(this);
-        binding.enableButtons();
 
         getLoaderManager().initLoader(0, null, new MainCallbacks());
         eventsManager.subscribeToEvent(this, ServiceStatusChangedEvent.class,
-                event -> binding.enableButtons());
+                event -> binding.enableButtons(event.newServiceStatus));
+        prefsManager.getServiceStatusAsync();
     }
 
     @Override

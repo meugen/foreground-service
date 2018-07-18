@@ -1,14 +1,11 @@
 package meugeninua.foregroundservice.app;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
-import android.os.Build;
+import android.os.AsyncTask;
 
 import javax.inject.Inject;
 
@@ -18,28 +15,33 @@ import dagger.android.HasActivityInjector;
 import dagger.android.HasBroadcastReceiverInjector;
 import dagger.android.HasContentProviderInjector;
 import dagger.android.HasServiceInjector;
-import meugeninua.foregroundservice.R;
+import meugeninua.foregroundservice.BuildConfig;
 import meugeninua.foregroundservice.app.di.DaggerAppComponent;
+import meugeninua.foregroundservice.app.managers.AppServiceManager;
+import meugeninua.foregroundservice.model.enums.ServiceStatus;
+import timber.log.Timber;
 
 public class ForegroundApp extends Application implements HasActivityInjector,
         HasServiceInjector, HasContentProviderInjector, HasBroadcastReceiverInjector {
-
-    public static final String CHANNEL_ID = "foreground";
 
     @Inject DispatchingAndroidInjector<Activity> activityInjector;
     @Inject DispatchingAndroidInjector<Service> serviceInjector;
     @Inject DispatchingAndroidInjector<ContentProvider> providerInjector;
     @Inject DispatchingAndroidInjector<BroadcastReceiver> receiverInjector;
 
+    @Inject AppServiceManager serviceManager;
+
     private boolean needToInject = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        injectIfNeeded();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel();
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
         }
+        injectIfNeeded();
+
+        new CheckServicesTask(serviceManager).execute();
     }
 
     private void injectIfNeeded() {
@@ -76,18 +78,21 @@ public class ForegroundApp extends Application implements HasActivityInjector,
         return receiverInjector;
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
-    private void createNotificationChannel() {
-        final NotificationChannel channel = new NotificationChannel(
-                CHANNEL_ID,
-                getText(R.string.default_notification_channel_name),
-                NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription(getString(R.string.default_notification_channel_description));
-        channel.setShowBadge(false);
-        channel.setLightColor(getColor(R.color.colorPrimary));
+    private static class CheckServicesTask extends AsyncTask<Void, Void, Void> {
 
-        final NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.createNotificationChannel(channel);
+        private final AppServiceManager serviceManager;
+
+        CheckServicesTask(
+                final AppServiceManager serviceManager) {
+            this.serviceManager = serviceManager;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... voids) {
+            @ServiceStatus
+            final int status = serviceManager.createNotificationChannel();
+            serviceManager.checkForegroundService(status);
+            return null;
+        }
     }
-
 }

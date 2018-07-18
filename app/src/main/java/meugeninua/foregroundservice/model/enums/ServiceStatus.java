@@ -7,10 +7,17 @@ import android.support.annotation.IntDef;
  */
 @IntDef({ServiceStatus.SERVICE_FOREGROUND,
         ServiceStatus.SERVICE_BACKGROUND,
-        ServiceStatus.SERVICE_STOPPED})
+        ServiceStatus.SERVICE_STOPPED,
+        ServiceStatus.SERVICE_INITIALIZED,
+        ServiceStatus.SERVICE_VOID})
 public @interface ServiceStatus {
 
-    int SERVICE_FOREGROUND = 1;
-    int SERVICE_BACKGROUND = 2;
-    int SERVICE_STOPPED = 3;
+    int MASK_CAN_BE_STARTED = 0x0100;
+    int MASK_CAN_BE_STOPPED = 0x0200;
+
+    int SERVICE_FOREGROUND = 0x01 | MASK_CAN_BE_STOPPED;
+    int SERVICE_BACKGROUND = 0x02 | MASK_CAN_BE_STOPPED;
+    int SERVICE_STOPPED = 0x03 | MASK_CAN_BE_STARTED;
+    int SERVICE_INITIALIZED = 0x04 | MASK_CAN_BE_STARTED;
+    int SERVICE_VOID = 0x05;
 }

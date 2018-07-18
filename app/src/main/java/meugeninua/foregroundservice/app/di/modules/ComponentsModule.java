@@ -4,7 +4,6 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import meugeninua.foregroundservice.app.broadcasts.OnEventBroadcast;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
-import meugeninua.foregroundservice.app.services.foreground.ForegroundServiceModule;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProvider;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderModule;
 import meugeninua.foregroundservice.model.providers.prefs.PrefsProvider;
@@ -23,7 +22,7 @@ public interface ComponentsModule {
     @ContributesAndroidInjector(modules = DetailsActivityModule.class)
     DetailsActivity contributeDetailsActivity();
 
-    @ContributesAndroidInjector(modules = ForegroundServiceModule.class)
+    @ContributesAndroidInjector
     ForegroundService contributeForegroundService();
 
     @ContributesAndroidInjector(modules = ForegroundProviderModule.class)

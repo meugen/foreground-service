@@ -12,17 +12,16 @@ import javax.inject.Inject;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
-import meugeninua.foregroundservice.app.managers.AppPrefsManager;
 import meugeninua.foregroundservice.model.enums.ServiceStatus;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.BaseBinding;
 import meugeninua.foregroundservice.ui.activities.main.fragments.main.adapters.MainAdapter;
 import meugeninua.foregroundservice.ui.activities.main.fragments.main.view.ArchMainView;
+import timber.log.Timber;
 
 public class MainBindingImpl extends BaseBinding implements MainBinding {
 
     @Inject @ActivityContext Context context;
     @Inject MainAdapter adapter;
-    @Inject AppPrefsManager prefsManager;
 
     @Inject
     MainBindingImpl() {}
@@ -50,10 +49,10 @@ public class MainBindingImpl extends BaseBinding implements MainBinding {
     }
 
     @Override
-    public void enableButtons() {
-        final int status = prefsManager.getServiceStatus();
-        get(R.id.start).setEnabled(status == ServiceStatus.SERVICE_STOPPED);
-        get(R.id.stop).setEnabled(status != ServiceStatus.SERVICE_STOPPED);
+    public void enableButtons(@ServiceStatus final int status) {
+        Timber.d("enableButtons(%d) method called", status);
+        get(R.id.start).setEnabled((status & ServiceStatus.MASK_CAN_BE_STARTED) != 0);
+        get(R.id.stop).setEnabled((status & ServiceStatus.MASK_CAN_BE_STOPPED) != 0);
     }
 
     private static class OnClickListenerImpl implements View.OnClickListener {
