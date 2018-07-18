@@ -16,6 +16,8 @@ import javax.inject.Inject;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
+import meugeninua.foregroundservice.app.managers.AppEventsManager;
+import meugeninua.foregroundservice.app.managers.events.ServiceStatusChangedEvent;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.BaseFragment;
@@ -27,6 +29,7 @@ public class MainFragment extends BaseFragment<MainBinding>
         implements ArchMainView, ForegroundProviderConstants {
 
     @Inject @ActivityContext Context context;
+    @Inject AppEventsManager eventsManager;
 
     @Nullable
     @Override
@@ -43,8 +46,11 @@ public class MainFragment extends BaseFragment<MainBinding>
         super.onActivityCreated(savedInstanceState);
         binding.setupRecycler();
         binding.setupListeners(this);
+        binding.enableButtons();
 
         getLoaderManager().initLoader(0, null, new MainCallbacks());
+        eventsManager.subscribeToEvent(this, ServiceStatusChangedEvent.class,
+                event -> binding.enableButtons());
     }
 
     @Override

@@ -2,6 +2,7 @@ package meugeninua.foregroundservice.app.di.modules;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import meugeninua.foregroundservice.app.broadcasts.OnEventBroadcast;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundServiceModule;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProvider;
@@ -30,4 +31,7 @@ public interface ComponentsModule {
 
     @ContributesAndroidInjector(modules = PrefsProviderModule.class)
     PrefsProvider contributePrefsProvider();
+
+    @ContributesAndroidInjector
+    OnEventBroadcast contributeOnEventBroadcast();
 }

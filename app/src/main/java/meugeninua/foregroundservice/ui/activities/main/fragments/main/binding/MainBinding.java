@@ -12,4 +12,6 @@ public interface MainBinding extends Binding {
     void setupListeners(ArchMainView view);
 
     void setupCursor(Cursor cursor);
+
+    void enableButtons();
 }

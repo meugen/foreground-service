@@ -1,4 +1,4 @@
-package meugeninua.foregroundservice.app.content;
+package meugeninua.foregroundservice.app.content.prefs;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -95,7 +95,7 @@ public class SharedPrefsImpl implements SharedPrefs, PrefsProviderConstants {
     public void putInt(final String name, final int val) {
         final ContentValues values = new ContentValues();
         values.put("name", name);
-        values.put(name, val);
+        values.put("val", val);
         resolver.insert(INTS_URI, values);
     }
 

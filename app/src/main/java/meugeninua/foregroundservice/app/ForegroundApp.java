@@ -6,6 +6,7 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
 import android.os.Build;
 
@@ -14,19 +15,21 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import dagger.android.HasBroadcastReceiverInjector;
 import dagger.android.HasContentProviderInjector;
 import dagger.android.HasServiceInjector;
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.DaggerAppComponent;
 
 public class ForegroundApp extends Application implements HasActivityInjector,
-        HasServiceInjector, HasContentProviderInjector {
+        HasServiceInjector, HasContentProviderInjector, HasBroadcastReceiverInjector {
 
     public static final String CHANNEL_ID = "foreground";
 
     @Inject DispatchingAndroidInjector<Activity> activityInjector;
     @Inject DispatchingAndroidInjector<Service> serviceInjector;
     @Inject DispatchingAndroidInjector<ContentProvider> providerInjector;
+    @Inject DispatchingAndroidInjector<BroadcastReceiver> receiverInjector;
 
     private boolean needToInject = true;
 
@@ -66,6 +69,11 @@ public class ForegroundApp extends Application implements HasActivityInjector,
     public AndroidInjector<ContentProvider> contentProviderInjector() {
         injectIfNeeded();
         return providerInjector;
+    }
+
+    @Override
+    public AndroidInjector<BroadcastReceiver> broadcastReceiverInjector() {
+        return receiverInjector;
     }
 
     @TargetApi(Build.VERSION_CODES.O)

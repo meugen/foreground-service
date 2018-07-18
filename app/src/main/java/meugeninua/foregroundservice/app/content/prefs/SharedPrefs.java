@@ -1,4 +1,4 @@
-package meugeninua.foregroundservice.app.content;
+package meugeninua.foregroundservice.app.content.prefs;
 
 public interface SharedPrefs {
 

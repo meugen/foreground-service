@@ -20,11 +20,13 @@ ext {
     packages.support = 'com.android.support'
     packages.okhttp = 'com.squareup.okhttp3'
     packages.dagger = 'com.google.dagger'
+    packages.timber = 'com.jakewharton.timber'
 
     def versions = [:]
     versions.support = '27.1.1'
     versions.okhttp = '3.10.0'
     versions.dagger = '2.15'
+    versions.timber = '4.7.1'
 
     def support = [:]
     support.appcompat = "${packages.support}:appcompat-v7:${versions.support}"
@@ -41,10 +43,14 @@ ext {
     dagger.android.core = "${packages.dagger}:dagger-android-support:${versions.dagger}"
     dagger.android.compiler = "${packages.dagger}:dagger-android-processor:${versions.dagger}"
 
+    def others = [:]
+    others.timber = "${packages.timber}:timber:${versions.timber}"
+
     deps = [
             "support": support,
             "okhttp": okhttp,
-            "dagger": dagger]
+            "dagger": dagger,
+            "others": others]
 }
 
 allprojects {

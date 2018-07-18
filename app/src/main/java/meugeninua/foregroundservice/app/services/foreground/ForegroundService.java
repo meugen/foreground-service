@@ -22,6 +22,8 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.ForegroundApp;
+import meugeninua.foregroundservice.app.managers.AppPrefsManager;
+import meugeninua.foregroundservice.model.enums.ServiceStatus;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -52,6 +54,7 @@ public class ForegroundService extends Service implements ForegroundProviderCons
 
     @Inject ScheduledExecutorService executor;
     @Inject OkHttpClient client;
+    @Inject AppPrefsManager prefsManager;
 
     @Override
     public void onCreate() {
@@ -75,6 +78,7 @@ public class ForegroundService extends Service implements ForegroundProviderCons
         this.wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "foreground");
         this.wakeLock.acquire();
 
+        prefsManager.setServiceStatus(ServiceStatus.SERVICE_FOREGROUND);
         executor.scheduleWithFixedDelay(new RunnableImpl(this),
                 0, 10, TimeUnit.SECONDS);
     }
@@ -85,6 +89,7 @@ public class ForegroundService extends Service implements ForegroundProviderCons
         unregisterReceiver(receiver);
         this.wakeLock.release();
         executor.shutdown();
+        prefsManager.setServiceStatus(ServiceStatus.SERVICE_STOPPED);
     }
 
     private void onCall() {
