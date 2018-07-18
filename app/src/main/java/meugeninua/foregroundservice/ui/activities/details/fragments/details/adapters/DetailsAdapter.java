@@ -17,9 +17,7 @@ import javax.inject.Inject;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
-import meugeninua.foregroundservice.app.di.scopes.PerFragment;
 
-@PerFragment
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.DetailsHolder> {
 
     private final LayoutInflater inflater;

@@ -5,12 +5,11 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import dagger.Module;
 import dagger.Provides;
-import meugeninua.foregroundservice.app.di.scopes.PerService;
 
 @Module
 public interface ForegroundServiceModule {
 
-    @Provides @PerService
+    @Provides
     static ScheduledExecutorService provideExecutor() {
         return Executors.newScheduledThreadPool(2);
     }

@@ -14,9 +14,7 @@ import javax.inject.Inject;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.AppContext;
-import meugeninua.foregroundservice.app.di.scopes.PerFragment;
 
-@PerFragment
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainHolder> {
 
     private final LayoutInflater inflater;

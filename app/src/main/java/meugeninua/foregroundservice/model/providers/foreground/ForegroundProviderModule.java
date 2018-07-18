@@ -7,18 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 import dagger.Module;
 import dagger.Provides;
 import meugeninua.foregroundservice.app.di.qualifiers.AppContext;
-import meugeninua.foregroundservice.app.di.scopes.PerProvider;
 import meugeninua.foregroundservice.model.db.AppDbOpenHelper;
 
 @Module
 public interface ForegroundProviderModule {
 
-    @Provides @PerProvider
+    @Provides
     static SQLiteDatabase bindForegroundOpenHelper(@AppContext final Context context) {
         return AppDbOpenHelper.foreground(context).getWritableDatabase();
     }
 
-    @Provides @PerProvider
+    @Provides
     static ContentResolver provideContentResolver(
             @AppContext final Context context) {
         return context.getContentResolver();

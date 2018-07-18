@@ -2,7 +2,6 @@ package meugeninua.foregroundservice.ui.activities.details.fragments.details;
 
 import dagger.Binds;
 import dagger.Module;
-import meugeninua.foregroundservice.app.di.scopes.PerFragment;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.BaseFragmentModule;
 import meugeninua.foregroundservice.ui.activities.details.fragments.details.binding.DetailsBinding;
 import meugeninua.foregroundservice.ui.activities.details.fragments.details.binding.DetailsBindingImpl;
@@ -10,6 +9,6 @@ import meugeninua.foregroundservice.ui.activities.details.fragments.details.bind
 @Module(includes = BaseFragmentModule.class)
 public interface DetailsFragmentModule {
 
-    @Binds @PerFragment
+    @Binds
     DetailsBinding bindBinding(DetailsBindingImpl impl);
 }
