@@ -22,6 +22,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.activities.details.DetailsActivity"
+            android:parentActivityName=".ui.activities.main.MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.main.MainActivity"/>
+        </activity>
+
         <provider
             android:name=".model.providers.foreground.ForegroundProvider"
             android:authorities="meugeninua.foregroundservice.provider.foreground"
@@ -39,14 +48,6 @@
             android:enabled="true"
             android:exported="true"
             android:process=":foreground"/>
-
-        <activity android:name=".ui.activities.details.DetailsActivity"
-            android:parentActivityName=".ui.activities.main.MainActivity">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.main.MainActivity"/>
-        </activity>
 
         <receiver
             android:name=".app.broadcasts.OnEventBroadcast"/>
