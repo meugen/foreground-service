@@ -2,16 +2,20 @@ package meugeninua.foregroundservice.ui.activities.main.fragments.main.binding;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
+import meugeninua.foregroundservice.app.managers.AppPrefsManager;
 import meugeninua.foregroundservice.model.enums.ServiceStatus;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.BaseBinding;
 import meugeninua.foregroundservice.ui.activities.main.fragments.main.adapters.MainAdapter;
@@ -22,9 +26,15 @@ public class MainBindingImpl extends BaseBinding implements MainBinding {
 
     @Inject @ActivityContext Context context;
     @Inject MainAdapter adapter;
+    @Inject AppPrefsManager prefsManager;
+    @Inject ScheduledExecutorService executor;
+
+    private final Handler handler;
 
     @Inject
-    MainBindingImpl() {}
+    MainBindingImpl() {
+        this.handler = new Handler(Looper.getMainLooper());
+    }
 
     @Override
     public void setupRecycler() {
@@ -48,6 +58,16 @@ public class MainBindingImpl extends BaseBinding implements MainBinding {
     @Override
     public void setupCursor(final Cursor cursor) {
         adapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void enableButtons() {
+        executor.execute(this::_enableButtons);
+    }
+
+    private void _enableButtons() {
+        final int status = prefsManager.getServiceStatus();
+        handler.post(() -> enableButtons(status));
     }
 
     @Override

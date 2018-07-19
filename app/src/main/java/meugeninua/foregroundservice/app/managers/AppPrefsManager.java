@@ -2,8 +2,6 @@ package meugeninua.foregroundservice.app.managers;
 
 import android.content.Context;
 
-import java.util.concurrent.ScheduledExecutorService;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -23,7 +21,6 @@ public class AppPrefsManager {
 
     @Inject @AppContext Context context;
     @Inject SharedPrefs sharedPrefs;
-    @Inject ScheduledExecutorService executor;
 
     @Inject
     AppPrefsManager() {}
@@ -36,14 +33,5 @@ public class AppPrefsManager {
     public int getServiceStatus() {
         return sharedPrefs.getInt(PREF_SERVICE_STATUS,
                 ServiceStatus.SERVICE_VOID);
-    }
-
-    public void getServiceStatusAsync() {
-        executor.execute(this::_getServiceStatusAsync);
-    }
-
-    private void _getServiceStatusAsync() {
-        final int status = getServiceStatus();
-        OnEventBroadcast.send(context, new ServiceStatusChangedEvent(status));
     }
 }

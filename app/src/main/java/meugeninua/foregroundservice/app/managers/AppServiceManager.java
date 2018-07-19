@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -32,6 +33,7 @@ public class AppServiceManager {
 
     @Inject @AppContext Context context;
     @Inject AppPrefsManager prefsManager;
+    @Inject ScheduledExecutorService executor;
     @Inject FirebaseJobDispatcher dispatcher;
 
     private final Handler handler;
@@ -41,15 +43,27 @@ public class AppServiceManager {
         this.handler = new Handler(Looper.getMainLooper());
     }
 
-    public void startBackgroundDelayed() {
-        handler.postDelayed(this::startBackground,
-                TimeUnit.SECONDS.toMillis(1));
+    public void stopService() {
+        executor.execute(this::_stopService);
+    }
+
+    private void _stopService() {
+        final int status = prefsManager.getServiceStatus();
+        if (status == ServiceStatus.SERVICE_FOREGROUND) {
+            ForegroundService.stop(context);
+        } else if (status == ServiceStatus.SERVICE_BACKGROUND) {
+            prefsManager.setServiceStatus(ServiceStatus.SERVICE_STOPPED);
+        }
     }
 
     public void startBackground() {
+        executor.schedule(this::_startBackground,
+                1, TimeUnit.SECONDS);
+    }
+
+    private void _startBackground() {
         prefsManager.setServiceStatus(ServiceStatus.SERVICE_BACKGROUND);
-        new FetchJobService.Launcher()
-                .launch(dispatcher);
+        handler.post(this::internalStartBackgroundService);
     }
 
     public NotificationCompat.Builder newBuilderForNotification() {
@@ -58,10 +72,17 @@ public class AppServiceManager {
                 .setSmallIcon(R.drawable.baseline_import_export_horizontal_black_18);
     }
 
-    public void checkForegroundService(@ServiceStatus final int status) {
+    public void checkService(@ServiceStatus final int status) {
         if (status == ServiceStatus.SERVICE_FOREGROUND) {
             ForegroundService.start(context);
+        } else if (status == ServiceStatus.SERVICE_BACKGROUND) {
+            handler.post(this::internalStartBackgroundService);
         }
+    }
+
+    private void internalStartBackgroundService() {
+        new FetchJobService.Launcher()
+                .launch(dispatcher);
     }
 
     @ServiceStatus

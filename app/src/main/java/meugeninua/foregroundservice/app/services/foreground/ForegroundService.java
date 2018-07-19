@@ -135,7 +135,7 @@ public class ForegroundService extends Service implements ForegroundProviderCons
                 stopForegroundService(context);
             } else if (MOVE_BACKGROUND_ACTION.equals(action)) {
                 stopForegroundService(context);
-                serviceManager.startBackgroundDelayed();
+                serviceManager.startBackground();
             }
         }
 

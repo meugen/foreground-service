@@ -5,7 +5,8 @@ import android.app.Application;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
-import android.os.AsyncTask;
+
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,7 @@ public class ForegroundApp extends Application implements HasActivityInjector,
     @Inject DispatchingAndroidInjector<ContentProvider> providerInjector;
     @Inject DispatchingAndroidInjector<BroadcastReceiver> receiverInjector;
 
+    @Inject ScheduledExecutorService executor;
     @Inject AppServiceManager serviceManager;
 
     private boolean needToInject = true;
@@ -41,7 +43,7 @@ public class ForegroundApp extends Application implements HasActivityInjector,
         }
         injectIfNeeded();
 
-        new CheckServicesTask(serviceManager).execute();
+        executor.execute(new CheckServicesTask(serviceManager));
     }
 
     private void injectIfNeeded() {
@@ -78,7 +80,7 @@ public class ForegroundApp extends Application implements HasActivityInjector,
         return receiverInjector;
     }
 
-    private static class CheckServicesTask extends AsyncTask<Void, Void, Void> {
+    private static class CheckServicesTask implements Runnable {
 
         private final AppServiceManager serviceManager;
 
@@ -88,11 +90,10 @@ public class ForegroundApp extends Application implements HasActivityInjector,
         }
 
         @Override
-        protected Void doInBackground(final Void... voids) {
+        public void run() {
             @ServiceStatus
             final int status = serviceManager.createNotificationChannel();
-            serviceManager.checkForegroundService(status);
-            return null;
+            serviceManager.checkService(status);
         }
     }
 }

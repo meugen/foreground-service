@@ -14,5 +14,7 @@ public interface MainBinding extends Binding {
 
     void setupCursor(Cursor cursor);
 
+    void enableButtons();
+
     void enableButtons(@ServiceStatus int status);
 }

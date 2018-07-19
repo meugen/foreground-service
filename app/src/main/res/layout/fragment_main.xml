@@ -20,14 +20,16 @@
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:text="@string/button_move_background"
-        android:id="@+id/move_background"/>
+        android:id="@+id/move_background"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:text="@string/button_move_foreground"
-        android:id="@+id/move_foreground"/>
+        android:id="@+id/move_foreground"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +47,8 @@
             android:drawableStart="@drawable/baseline_play_arrow_black_24"
             android:drawablePadding="@dimen/default_padding"
             android:text="@string/button_start"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:enabled="false"/>
 
         <Space
             android:layout_width="@dimen/default_margin"
@@ -60,7 +63,8 @@
             android:drawableStart="@drawable/baseline_stop_black_24"
             android:drawablePadding="@dimen/default_padding"
             android:text="@string/button_stop"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:enabled="false"/>
 
     </LinearLayout>
 
