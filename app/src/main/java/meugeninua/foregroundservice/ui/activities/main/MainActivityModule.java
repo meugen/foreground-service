@@ -6,6 +6,8 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import meugeninua.foregroundservice.ui.activities.base.BaseActivityModule;
+import meugeninua.foregroundservice.ui.activities.main.fragments.choose.ChooseServiceModeDialog;
+import meugeninua.foregroundservice.ui.activities.main.fragments.choose.ChooseServiceModeDialogModule;
 import meugeninua.foregroundservice.ui.activities.main.fragments.main.MainFragment;
 import meugeninua.foregroundservice.ui.activities.main.fragments.main.MainFragmentModule;
 
@@ -17,4 +19,7 @@ public interface MainActivityModule {
 
     @ContributesAndroidInjector(modules = MainFragmentModule.class)
     MainFragment contributeMainFragment();
+
+    @ContributesAndroidInjector(modules = ChooseServiceModeDialogModule.class)
+    ChooseServiceModeDialog contributeChooseServiceModeDialog();
 }

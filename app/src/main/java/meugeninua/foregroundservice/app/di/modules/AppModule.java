@@ -2,6 +2,8 @@ package meugeninua.foregroundservice.app.di.modules;
 
 import android.app.AlarmManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
@@ -42,5 +44,11 @@ public interface AppModule {
     static FirebaseJobDispatcher provideDispatcher(
             @AppContext final Context context) {
         return new FirebaseJobDispatcher(new GooglePlayDriver(context));
+    }
+
+    @Provides @Singleton
+    static SharedPreferences provideSharedPreferences(
+            @AppContext final Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }

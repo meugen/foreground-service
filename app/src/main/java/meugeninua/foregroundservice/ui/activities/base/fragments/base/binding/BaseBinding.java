@@ -19,7 +19,9 @@ public abstract class BaseBinding {
 
     public void detachView() {
         rootViewRef = null;
-        childrenViewRefs.clear();
+        if (childrenViewRefs != null) {
+            childrenViewRefs.clear();
+        }
         childrenViewRefs = null;
     }
 
