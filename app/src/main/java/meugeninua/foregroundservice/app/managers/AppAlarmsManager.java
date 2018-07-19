@@ -3,6 +3,7 @@ package meugeninua.foregroundservice.app.managers;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.os.SystemClock;
 import android.support.v4.app.AlarmManagerCompat;
 
 import javax.inject.Inject;
@@ -26,8 +27,9 @@ public class AppAlarmsManager {
     public void launchNextFetch(final long millis) {
         final PendingIntent intent = LaunchFetchBroadcast
                 .build(context);
+        final long triggerAtMillis = SystemClock.elapsedRealtime() + millis;
         AlarmManagerCompat.setExact(manager,
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                millis, intent);
+                triggerAtMillis, intent);
     }
 }
