@@ -2,8 +2,10 @@ package meugeninua.foregroundservice.app.di.modules;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import meugeninua.foregroundservice.app.broadcasts.LaunchFetchBroadcast;
 import meugeninua.foregroundservice.app.broadcasts.OnEventBroadcast;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
+import meugeninua.foregroundservice.app.services.jobs.FetchJobService;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProvider;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderModule;
 import meugeninua.foregroundservice.model.providers.prefs.PrefsProvider;
@@ -25,6 +27,9 @@ public interface ComponentsModule {
     @ContributesAndroidInjector
     ForegroundService contributeForegroundService();
 
+    @ContributesAndroidInjector
+    FetchJobService contributeFetchJobService();
+
     @ContributesAndroidInjector(modules = ForegroundProviderModule.class)
     ForegroundProvider contributeForegroundProvider();
 
@@ -33,4 +38,7 @@ public interface ComponentsModule {
 
     @ContributesAndroidInjector
     OnEventBroadcast contributeOnEventBroadcast();
+
+    @ContributesAndroidInjector
+    LaunchFetchBroadcast contributeLaunchFetchBroadcast();
 }

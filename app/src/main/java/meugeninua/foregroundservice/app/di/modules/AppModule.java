@@ -1,6 +1,10 @@
 package meugeninua.foregroundservice.app.di.modules;
 
+import android.app.AlarmManager;
 import android.content.Context;
+
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -24,8 +28,19 @@ public interface AppModule {
     @Binds
     SharedPrefs bindSharedPrefs(SharedPrefsImpl impl);
 
+    @Provides
+    static AlarmManager provideAlarmManager(@AppContext final Context context) {
+        return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    }
+
     @Provides @Singleton
     static ScheduledExecutorService provideExecutor() {
         return Executors.newScheduledThreadPool(2);
+    }
+
+    @Provides @Singleton
+    static FirebaseJobDispatcher provideDispatcher(
+            @AppContext final Context context) {
+        return new FirebaseJobDispatcher(new GooglePlayDriver(context));
     }
 }

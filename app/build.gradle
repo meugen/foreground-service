@@ -9,6 +9,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'long', 'FETCH_PERIOD_MILLIS', 'java.util.concurrent.TimeUnit.SECONDS.toMillis(10)'
     }
     buildTypes {
         release {
@@ -33,6 +35,8 @@ dependencies {
     annotationProcessor deps.dagger.compiler
     implementation deps.dagger.android.core
     annotationProcessor deps.dagger.android.compiler
+
+    implementation deps.firebase.dispatcher
 
     implementation deps.others.timber
 }

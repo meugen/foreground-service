@@ -5,7 +5,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
+
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -13,6 +19,7 @@ import javax.inject.Singleton;
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.app.di.qualifiers.AppContext;
 import meugeninua.foregroundservice.app.services.foreground.ForegroundService;
+import meugeninua.foregroundservice.app.services.jobs.FetchJobService;
 import meugeninua.foregroundservice.model.enums.ServiceStatus;
 
 /**
@@ -25,9 +32,25 @@ public class AppServiceManager {
 
     @Inject @AppContext Context context;
     @Inject AppPrefsManager prefsManager;
+    @Inject FirebaseJobDispatcher dispatcher;
+
+    private final Handler handler;
 
     @Inject
-    AppServiceManager() {}
+    AppServiceManager() {
+        this.handler = new Handler(Looper.getMainLooper());
+    }
+
+    public void startBackgroundDelayed() {
+        handler.postDelayed(this::startBackground,
+                TimeUnit.SECONDS.toMillis(1));
+    }
+
+    public void startBackground() {
+        prefsManager.setServiceStatus(ServiceStatus.SERVICE_BACKGROUND);
+        new FetchJobService.Launcher()
+                .launch(dispatcher);
+    }
 
     public NotificationCompat.Builder newBuilderForNotification() {
         return new NotificationCompat.Builder(context, CHANNEL_ID)

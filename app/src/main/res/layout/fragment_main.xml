@@ -15,6 +15,20 @@
         tools:listitem="@layout/item_main"
         android:id="@+id/recycler"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="@string/button_move_background"
+        android:id="@+id/move_background"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="@string/button_move_foreground"
+        android:id="@+id/move_foreground"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

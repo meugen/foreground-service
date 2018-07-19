@@ -7,4 +7,8 @@ public interface ArchMainView extends MainAdapter.OnItemSelectedListener {
     void onStartClick();
 
     void onStopClick();
+
+    void onMoveForeground();
+
+    void onMoveBackground();
 }

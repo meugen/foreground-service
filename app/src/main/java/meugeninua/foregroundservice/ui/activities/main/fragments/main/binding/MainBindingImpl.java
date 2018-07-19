@@ -39,6 +39,8 @@ public class MainBindingImpl extends BaseBinding implements MainBinding {
         final OnClickListenerImpl impl = new OnClickListenerImpl(view);
         get(R.id.start).setOnClickListener(impl);
         get(R.id.stop).setOnClickListener(impl);
+        get(R.id.move_foreground).setOnClickListener(impl);
+        get(R.id.move_background).setOnClickListener(impl);
 
         adapter.setListener(view);
     }
@@ -53,6 +55,10 @@ public class MainBindingImpl extends BaseBinding implements MainBinding {
         Timber.d("enableButtons(%d) method called", status);
         get(R.id.start).setEnabled((status & ServiceStatus.MASK_CAN_BE_STARTED) != 0);
         get(R.id.stop).setEnabled((status & ServiceStatus.MASK_CAN_BE_STOPPED) != 0);
+        get(R.id.move_background).setVisibility((status & ServiceStatus
+                .MASK_CAN_MOVE_BACKGROUND) != 0 ? View.VISIBLE : View.GONE);
+        get(R.id.move_foreground).setVisibility((status & ServiceStatus
+                .MASK_CAN_MOVE_FOREGROUND) != 0 ? View.VISIBLE : View.GONE);
     }
 
     private static class OnClickListenerImpl implements View.OnClickListener {
@@ -74,6 +80,10 @@ public class MainBindingImpl extends BaseBinding implements MainBinding {
                 view.onStartClick();
             } else if (id == R.id.stop) {
                 view.onStopClick();
+            } else if (id == R.id.move_background) {
+                view.onMoveBackground();
+            } else if (id == R.id.move_foreground) {
+                view.onMoveForeground();
             }
         }
     }

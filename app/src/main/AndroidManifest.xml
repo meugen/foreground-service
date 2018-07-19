@@ -49,8 +49,20 @@
             android:exported="true"
             android:process=":foreground"/>
 
+        <service
+            android:name=".app.services.jobs.FetchJobService"
+            android:process=":jobs">
+
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
         <receiver
             android:name=".app.broadcasts.OnEventBroadcast"/>
+
+        <receiver
+            android:name=".app.broadcasts.LaunchFetchBroadcast"/>
     </application>
 
 </manifest>

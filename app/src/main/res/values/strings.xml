@@ -2,6 +2,8 @@
     <string name="app_name">ForegroundService</string>
     <string name="button_stop">Stop</string>
     <string name="button_start">Start</string>
+    <string name="button_move_background">Move background</string>
+    <string name="button_move_foreground">Move foreground</string>
 
     <string name="default_notification_channel_name">Foreground</string>
     <string name="default_notification_channel_description">An example of foreground service</string>

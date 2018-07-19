@@ -66,6 +66,16 @@ public class MainFragment extends BaseFragment<MainBinding>
     }
 
     @Override
+    public void onMoveForeground() {
+        ForegroundService.start(context);
+    }
+
+    @Override
+    public void onMoveBackground() {
+        ForegroundService.moveBackground(context);
+    }
+
+    @Override
     public void onItemSelected(final int result) {
         DetailsActivity.start(context, result);
     }
