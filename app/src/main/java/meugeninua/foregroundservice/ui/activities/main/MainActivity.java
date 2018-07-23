@@ -13,9 +13,5 @@ public class MainActivity extends BaseActivity<Binding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final Toolbar toolbar = binding
-                .get(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 }

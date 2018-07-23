@@ -28,6 +28,7 @@ dependencies {
     implementation deps.support.appcompat
     implementation deps.support.recyclerview
     implementation deps.support.constraint
+    implementation deps.support.design
 
     implementation deps.okhttp.core
 

@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        android:background="?attr/colorPrimary"
-        app:elevation="@dimen/default_elevation"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:name="meugeninua.foregroundservice.ui.activities.main.fragments.main.MainFragment"
-        tools:layout="@layout/fragment_main"
-        android:id="@+id/main"
-        android:layout_weight="1"/>
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:name="meugeninua.foregroundservice.ui.activities.main.fragments.main.MainFragment"
+    tools:layout="@layout/fragment_main"
+    android:id="@+id/main"/>

@@ -34,6 +34,7 @@ ext {
     support.appcompat = "${packages.support}:appcompat-v7:${versions.support}"
     support.recyclerview = "${packages.support}:recyclerview-v7:${versions.support}"
     support.constraint = "${packages.support}.constraint:constraint-layout:1.1.2"
+    support.design = "${packages.support}:design:${versions.support}"
 
     def okhttp = [:]
     okhttp.core = "${packages.okhttp}:okhttp:${versions.okhttp}"

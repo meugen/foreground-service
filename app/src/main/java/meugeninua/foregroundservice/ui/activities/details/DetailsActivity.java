@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
@@ -26,6 +27,10 @@ public class DetailsActivity extends BaseActivity<Binding> implements Foreground
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        final Toolbar toolbar = binding
+                .get(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         final FragmentManager fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(FRAGMENT_TAG) == null) {
