@@ -8,9 +8,10 @@ import android.support.v4.app.FragmentManager;
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.model.providers.foreground.ForegroundProviderConstants;
 import meugeninua.foregroundservice.ui.activities.base.BaseActivity;
+import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.Binding;
 import meugeninua.foregroundservice.ui.activities.details.fragments.details.DetailsFragment;
 
-public class DetailsActivity extends BaseActivity implements ForegroundProviderConstants {
+public class DetailsActivity extends BaseActivity<Binding> implements ForegroundProviderConstants {
 
     private static final String EXTRA_RESULT = "result";
     private static final String FRAGMENT_TAG = "details";

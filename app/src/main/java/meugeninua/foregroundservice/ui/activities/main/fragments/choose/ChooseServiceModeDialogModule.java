@@ -5,6 +5,8 @@ import dagger.Module;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.BaseFragmentModule;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.Binding;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.BindingImpl;
+import meugeninua.foregroundservice.ui.activities.main.fragments.choose.binding.ChooseServiceModeBinding;
+import meugeninua.foregroundservice.ui.activities.main.fragments.choose.binding.ChooseServiceModeBindingImpl;
 
 /**
  * @author meugen
@@ -13,5 +15,5 @@ import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.Bi
 public interface ChooseServiceModeDialogModule {
 
     @Binds
-    Binding bindBinding(BindingImpl impl);
+    ChooseServiceModeBinding bindBinding(ChooseServiceModeBindingImpl impl);
 }
