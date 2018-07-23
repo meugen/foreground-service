@@ -14,7 +14,6 @@ import meugeninua.foregroundservice.app.di.qualifiers.ActivityContext;
 import meugeninua.foregroundservice.app.managers.AppEventsManager;
 import meugeninua.foregroundservice.app.managers.events.ServiceModeChosenEvent;
 import meugeninua.foregroundservice.ui.activities.base.fragments.base.BaseDialogFragment;
-import meugeninua.foregroundservice.ui.activities.base.fragments.base.binding.Binding;
 import meugeninua.foregroundservice.ui.activities.main.fragments.choose.binding.ChooseServiceModeBinding;
 
 /**

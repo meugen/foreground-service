@@ -1,7 +1,6 @@
 package meugeninua.foregroundservice.ui.activities.main;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 import meugeninua.foregroundservice.R;
 import meugeninua.foregroundservice.ui.activities.base.BaseActivity;
