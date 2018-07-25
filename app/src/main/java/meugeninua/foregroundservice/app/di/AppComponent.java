@@ -10,8 +10,10 @@ import meugeninua.foregroundservice.app.di.modules.AppModule;
 import meugeninua.foregroundservice.app.di.modules.ComponentsModule;
 import meugeninua.foregroundservice.app.di.modules.NetworkModule;
 
-@Component(modules = {AndroidSupportInjectionModule.class,
-        AppModule.class, ComponentsModule.class, NetworkModule.class})
+@Component(modules = {
+        AppModule.class,
+        ComponentsModule.class,
+        NetworkModule.class})
 @Singleton
 public interface AppComponent extends AndroidInjector<ForegroundApp> {
 
