@@ -15,50 +15,18 @@ buildscript {
     }
 }
 
-ext {
-    def packages = [:]
-    packages.support = 'com.android.support'
-    packages.okhttp = 'com.squareup.okhttp3'
-    packages.dagger = 'com.google.dagger'
-    packages.timber = 'com.jakewharton.timber'
-    packages.dispatcher = 'com.firebase'
-
-    def versions = [:]
-    versions.support = '27.1.1'
-    versions.okhttp = '3.10.0'
-    versions.dagger = '2.15'
-    versions.timber = '4.7.1'
-    versions.dispatcher = '0.8.5'
-
-    def support = [:]
-    support.appcompat = "${packages.support}:appcompat-v7:${versions.support}"
-    support.recyclerview = "${packages.support}:recyclerview-v7:${versions.support}"
-    support.constraint = "${packages.support}.constraint:constraint-layout:1.1.2"
-    support.design = "${packages.support}:design:${versions.support}"
-
-    def okhttp = [:]
-    okhttp.core = "${packages.okhttp}:okhttp:${versions.okhttp}"
-
-    def dagger = [:]
-    dagger.core = "${packages.dagger}:dagger:${versions.dagger}"
-    dagger.compiler = "${packages.dagger}:dagger-compiler:${versions.dagger}"
-    dagger.android = [:]
-    dagger.android.core = "${packages.dagger}:dagger-android-support:${versions.dagger}"
-    dagger.android.compiler = "${packages.dagger}:dagger-android-processor:${versions.dagger}"
-
-    def firebase = [:]
-    firebase.dispatcher = "${packages.dispatcher}:firebase-jobdispatcher:${versions.dispatcher}"
-
-    def others = [:]
-    others.timber = "${packages.timber}:timber:${versions.timber}"
-
-    deps = [
-            "support": support,
-            "okhttp": okhttp,
-            "dagger": dagger,
-            "firebase": firebase,
-            "others": others]
-}
+ext.packages = [
+        support: 'com.android.support',
+        okhttp: 'com.squareup.okhttp3',
+        dagger: 'com.google.dagger',
+        timber: 'com.jakewharton.timber',
+        dispatcher: 'com.firebase']
+ext.versions = [
+        support: '27.1.1',
+        okhttp: '3.10.0',
+        dagger: '2.15',
+        timber: '4.7.1',
+        dispatcher: '0.8.5']
 
 allprojects {
     repositories {

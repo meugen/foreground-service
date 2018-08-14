@@ -25,19 +25,19 @@ android {
 }
 
 dependencies {
-    implementation deps.support.appcompat
-    implementation deps.support.recyclerview
-    implementation deps.support.constraint
-    implementation deps.support.design
+    implementation "${packages.support}:appcompat-v7:${versions.support}"
+    implementation "${packages.support}:recyclerview-v7:${versions.support}"
+    implementation "${packages.support}.constraint:constraint-layout:1.1.2"
+    implementation "${packages.support}:design:${versions.support}"
 
-    implementation deps.okhttp.core
+    implementation "${packages.okhttp}:okhttp:${versions.okhttp}"
 
-    implementation deps.dagger.core
-    annotationProcessor deps.dagger.compiler
-    implementation deps.dagger.android.core
-    annotationProcessor deps.dagger.android.compiler
+    implementation "${packages.dagger}:dagger:${versions.dagger}"
+    annotationProcessor "${packages.dagger}:dagger-compiler:${versions.dagger}"
+    implementation "${packages.dagger}:dagger-android-support:${versions.dagger}"
+    annotationProcessor "${packages.dagger}:dagger-android-processor:${versions.dagger}"
 
-    implementation deps.firebase.dispatcher
+    implementation "${packages.dispatcher}:firebase-jobdispatcher:${versions.dispatcher}"
 
-    implementation deps.others.timber
+    implementation "${packages.timber}:timber:${versions.timber}"
 }
