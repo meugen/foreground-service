@@ -12,10 +12,20 @@ android {
 
         buildConfigField 'long', 'FETCH_PERIOD_MILLIS', 'java.util.concurrent.TimeUnit.SECONDS.toMillis(10)'
     }
+    signingConfigs {
+        config {
+            keyAlias 'app'
+            keyPassword 'IpC8CeSnnq1a'
+            storeFile file('foreground_service.jks')
+            storePassword 'Mqf1m1pmMu82'
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
@@ -30,14 +40,12 @@ dependencies {
     implementation "${packages.support}.constraint:constraint-layout:1.1.2"
     implementation "${packages.support}:design:${versions.support}"
 
-    implementation "${packages.okhttp}:okhttp:${versions.okhttp}"
-
     implementation "${packages.dagger}:dagger:${versions.dagger}"
     annotationProcessor "${packages.dagger}:dagger-compiler:${versions.dagger}"
     implementation "${packages.dagger}:dagger-android-support:${versions.dagger}"
     annotationProcessor "${packages.dagger}:dagger-android-processor:${versions.dagger}"
 
+    implementation "${packages.okhttp}:okhttp:${versions.okhttp}"
     implementation "${packages.dispatcher}:firebase-jobdispatcher:${versions.dispatcher}"
-
     implementation "${packages.timber}:timber:${versions.timber}"
 }
